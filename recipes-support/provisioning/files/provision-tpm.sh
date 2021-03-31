@@ -68,7 +68,7 @@ end() {
 CA_DIR=`mktemp -d -t tpm2tmpca.XXXXXX`
 export CA_DIR
 
-tpm2pkcs11tool='pkcs11-tool --module /usr/lib/pkcs11/libtpm2_pkcs11.so'
+tpm2pkcs11tool='pkcs11-tool --module /usr/lib/libtpm2_pkcs11.so.0'
 hsmpkcs11tool='pkcs11-tool --module /usr/lib/opensc-pkcs11.so'
 
 # Generate SO-PIN
@@ -190,7 +190,7 @@ pkcs11 = pkcs11_section
 
 [pkcs11_section]
 engine_id = pkcs11
-MODULE_PATH = /usr/lib/pkcs11/libtpm2_pkcs11.so
+MODULE_PATH = /usr/lib/libtpm2_pkcs11.so.0
 PIN=myuserpin
 init = 0
 
