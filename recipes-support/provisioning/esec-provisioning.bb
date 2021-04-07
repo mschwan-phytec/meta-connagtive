@@ -10,9 +10,13 @@ S = "${WORKDIR}"
 
 do_install() {
     install -d ${D}${bindir}
-    install -m 0500 provision-tpm.sh ${D}${bindir}/provision-tpm
+    install -m 0500 ${S}/provision-tpm.sh ${D}${bindir}/provision-tpm
 }
 
 FILES_${PN} = " \
     ${bindir}/provision-tpm \
+"
+RDEPENDS_${PN} = " \
+    util-linux \
+    tpm2-tools \
 "
