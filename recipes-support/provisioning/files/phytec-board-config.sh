@@ -40,7 +40,7 @@ calc_wt_size() {
     # NOTE: it's tempting to redirect stderr to /dev/null, so supress error
     # output from tput. However in this case, tput detects neither stdout or
     # stderr is a tty and so only gives default 80, 24 values
-    WT_HEIGHT=18
+    WT_HEIGHT=20
     WT_WIDTH=$(echo $COLUMNS)
 
     if [ -z "$WT_WIDTH" ] || [ "$WT_WIDTH" -lt 60 ]; then
@@ -256,6 +256,7 @@ do_resetAWSCONFIG() {
 }
 
 do_onboarding() {
+    awsrestart="0"
     awsrequest="https://devices.aws.esec-experts.com/ownership/token"
     if [ $# -eq 1 ]; then
         awsrequest="--request POST https://devices.aws.esec-experts.com/ownership/customer_account?customer_mail=$1"
@@ -303,7 +304,9 @@ The next steps are:
     Valid until: ${valid}
     for the device with
     Certificate serial number ${certserial}
-    to your account:" $WT_HEIGHT $WT_WIDTH
+    to your account:
+ 3) after you press 'ok', the awsclient will be restarted
+    three times" $WT_HEIGHT $WT_WIDTH
         else
             # get user item
             set_onboarded accountdevice
@@ -326,6 +329,11 @@ The next steps are:
             set_onboarded accountdevice
         fi
         echo "response: ${response}"
+        echo "After the successful onboarding the awsclient needs to be restarted 3 times."
+        awsrestart="1"
+    fi
+    if [ "$awsrestart" = "0" ]; then
+        do_restart_awsclient
     fi
     return 0
 }
@@ -346,6 +354,12 @@ do_newaccount() {
     return $val
 }
 
+do_restart_awsclient() {
+    echo restarting awsclient, please wait...
+    systemctl restart awsclient
+    systemctl restart awsclient
+    systemctl restart awsclient
+}
 
 calc_wt_size
 do_esecawsconf
