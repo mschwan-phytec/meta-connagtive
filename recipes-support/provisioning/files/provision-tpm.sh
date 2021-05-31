@@ -265,3 +265,7 @@ $tpm2pkcs11tool -w "${CA_DIR}/devcrt.pem" -y cert -a iotdm-cert --pin ${TPM_PIN}
 $tpm2pkcs11tool -w "${CA_PEM}" -y cert -a iotdm-subcert --pin ${TPM_PIN} -d 3
 # Write root CA cert
 $tpm2pkcs11tool -w "${ROOTCA_PEM}" -y cert -a iotdm-rootcert --pin ${TPM_PIN} -d 4
+
+#ssh keys
+mkdir -p /mnt/config/.ssh --mode=750
+sudo ssh-keygen -t ecdsa -b 521 -f /mnt/config/.ssh/id_ecdsa -N ""
