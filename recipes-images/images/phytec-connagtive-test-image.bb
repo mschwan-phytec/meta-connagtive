@@ -33,6 +33,7 @@ IMAGE_INSTALL = " \
     blink-led \
     remotemanager \
     ${@bb.utils.contains("DISTRO_FEATURES", "protectionshield", "connagtive-kit-user", "", d)} \
+    connagtive-whitelist \
 "
 
 IMAGE_INSTALL_append_mx6 = " firmwared"
