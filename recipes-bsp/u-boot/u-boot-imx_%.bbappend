@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-SRC_URI += " \
+SRC_URI_append_connagtive-productive = " \
     file://0001-include-configs-Change-A-B-system-partitions.patch \
-    ${@bb.utils.contains("DISTRO_FEATURES", "connagtive-provisioning", "", "file://0002-include-configs-Enable-booting-A-B-system-by-default.patch", d)} \
+    file://0002-include-configs-Enable-booting-A-B-system-by-default.patch \
 "
